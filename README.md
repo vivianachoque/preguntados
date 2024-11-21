@@ -1,4 +1,4 @@
-# **Preguntados - El Juego de las Preguntas Argentinas**
+# **Preguntados - El Juego de las Preguntas**
 
 ¡Bienvenidos a **Preguntados**, la versión programada en **Python con Pygame** para desafiarnos a pensar, aprender y divertirnos! 
 
