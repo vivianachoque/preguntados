@@ -1,5 +1,7 @@
 # **Preguntados - El Juego de las Preguntas**
 
+# escribo esto para testear la branch nueva y el push
+
 ¡Bienvenidos a **Preguntados**, la versión programada en **Python con Pygame** para desafiarnos a pensar, aprender y divertirnos! 
 
 ---
