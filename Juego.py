@@ -5,24 +5,32 @@ from Preguntas import *
 
 pygame.init()
 
-# Ruta de la imagen de fondo
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500)) 
 
-# Configuración de preguntas y respuestas
+COLOR_PREGUNTA = (134, 23, 219)  
+COLOR_RESPUESTA = (70, 130, 180)
+COLOR_RESPUESTA_HOVER = (100, 149, 237, 150) #Corregir porque se rompe al hacer hover
+COLOR_SOMBRA = (50, 100, 150)
+
+def crear_superficie_redondeada(width, height, radius, color):
+    surface = pygame.Surface((width, height), pygame.SRCALPHA) 
+    rect = pygame.Rect(0, 0, width, height)
+    pygame.draw.rect(surface, color, rect, border_radius=radius)
+    return surface
+
 cuadro_pregunta = {}
-cuadro_pregunta["superficie"] = pygame.Surface(TAMAÑO_PREGUNTA)
+cuadro_pregunta["superficie"] = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_PREGUNTA)
 cuadro_pregunta["rectangulo"] = cuadro_pregunta["superficie"].get_rect()
-cuadro_pregunta["superficie"].fill(COLOR_ROJO)
 
 lista_respuestas = []
 
 for i in range(3):
     cuadro_respuesta = {}
-    cuadro_respuesta["superficie"] = pygame.Surface(TAMAÑO_RESPUESTA)
+    cuadro_respuesta["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA)
     cuadro_respuesta["rectangulo"] = cuadro_respuesta["superficie"].get_rect()
-    cuadro_respuesta["superficie"].fill(COLOR_AZUL)
+    cuadro_respuesta["hover"] = False
     lista_respuestas.append(cuadro_respuesta)
     
 indice = 0 
@@ -36,12 +44,13 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     retorno = "juego"
     if bandera_respuesta:
         pygame.time.delay(250)
-        cuadro_pregunta["superficie"].fill(COLOR_ROJO)
+        cuadro_pregunta["superficie"] = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_PREGUNTA)
         for i in range(len(lista_respuestas)):
-            lista_respuestas[i]["superficie"].fill(COLOR_AZUL)
+            lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA)
         bandera_respuesta = False
     
     pregunta_actual = lista_preguntas[indice]
+    pos_mouse = pygame.mouse.get_pos()
     
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
@@ -53,16 +62,14 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                     
                     if respuesta_seleccionada == pregunta_actual["respuesta_correcta"]:
                         ACIERTO_SONIDO.play()
-                        print("RESPUESTA CORRECTA")
-                        lista_respuestas[i]["superficie"].fill(COLOR_VERDE_OSCURO)
+                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE)
                         datos_juego["puntuacion"] += PUNTUACION_ACIERTO
                     else:
                         ERROR_SONIDO.play()
-                        lista_respuestas[i]["superficie"].fill(COLOR_ROJO)
+                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_ROJO)
                         if datos_juego["puntuacion"] > 0:
                             datos_juego["puntuacion"] -= PUNTUACION_ERROR
                         datos_juego["cantidad_vidas"] -= 1
-                        print("RESPUESTA INCORRECTA")
                     indice += 1
                     
                     if indice == len(lista_preguntas):
@@ -71,27 +78,34 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                         
                     bandera_respuesta = True
 
-    # Dibuja la imagen de fondo
-    pantalla.blit(imagen_fondo, (0, 0)) 
+    pantalla.blit(imagen_fondo, (0, 0))
 
-    # Renderizado de preguntas y respuestas
-    mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_27, COLOR_NEGRO)
+    # Sombra y pregunta
+    sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)
+    pantalla.blit(sombra_pregunta, (82, 82))
+    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 80))
+
+    # Respuestas con hover y sombras
+    posiciones_respuestas = [(125, 245), (125, 315), (125, 385)]
+    
+    for i, pos in enumerate(posiciones_respuestas):
+        sombra = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA)
+        pantalla.blit(sombra, (pos[0] + 2, pos[1] + 2))
+
+        boton_rect = pygame.Rect(pos[0], pos[1], TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1])
+        if boton_rect.collidepoint(pos_mouse):
+            superficie_hover = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA_HOVER)
+            lista_respuestas[i]["rectangulo"] = pantalla.blit(superficie_hover, pos)
+        else:
+            lista_respuestas[i]["rectangulo"] = pantalla.blit(lista_respuestas[i]["superficie"], pos)
+
+    # Texto
+    mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_27, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[0]["superficie"], f"{pregunta_actual['respuesta_1']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[1]["superficie"], f"{pregunta_actual['respuesta_2']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-    
-    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 80))
-    lista_respuestas[0]["rectangulo"] = pantalla.blit(lista_respuestas[0]["superficie"], (125, 245))  # Respuesta 1
-    lista_respuestas[1]["rectangulo"] = pantalla.blit(lista_respuestas[1]["superficie"], (125, 315))  # Respuesta 2
-    lista_respuestas[2]["rectangulo"] = pantalla.blit(lista_respuestas[2]["superficie"], (125, 385))  # Respuesta 3
 
-    # Dibuja bordes
-    pygame.draw.rect(pantalla, COLOR_NEGRO, cuadro_pregunta["rectangulo"], 2)
-    pygame.draw.rect(pantalla, COLOR_BLANCO, lista_respuestas[0]["rectangulo"], 2)
-    pygame.draw.rect(pantalla, COLOR_BLANCO, lista_respuestas[1]["rectangulo"], 2)
-    pygame.draw.rect(pantalla, COLOR_BLANCO, lista_respuestas[2]["rectangulo"], 2)
-
-    # Muestra puntuación y vidas
+    # Puntuación y vidas
     mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (10, 10), FUENTE_25, COLOR_NEGRO)
     mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (10, 40), FUENTE_25, COLOR_NEGRO)
     
