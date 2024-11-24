@@ -21,4 +21,4 @@ Todo esto acompañado de un sistema simple pero visualmente atractivo, con músi
 1. **¡Arrancá el juego!**  
    Ejecutá el archivo principal con:
    ```bash
-   python3 main.py
+   python3 Principal.py
