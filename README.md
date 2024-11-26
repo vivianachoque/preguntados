@@ -1,7 +1,5 @@
 # **Preguntados - El Juego de las Preguntas**
 
-# escribo esto para testear la branch nueva y el push
-
 ¡Bienvenidos a **Preguntados**, la versión programada en **Python con Pygame** para desafiarnos a pensar, aprender y divertirnos! 
 
 ---
@@ -23,4 +21,4 @@ Todo esto acompañado de un sistema simple pero visualmente atractivo, con músi
 1. **¡Arrancá el juego!**  
    Ejecutá el archivo principal con:
    ```bash
-   python3 main.py
+   python3 Principal.py
