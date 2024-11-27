@@ -32,6 +32,7 @@ FUENTE_50 = pygame.font.SysFont("Arial",50)
 CLICK_SONIDO = pygame.mixer.Sound("assets/musica/click.mp3")
 ACIERTO_SONIDO = pygame.mixer.Sound("assets/musica/correct.mp3")
 ERROR_SONIDO = pygame.mixer.Sound("assets/musica/wrong.mp3")
+GAME_OVER_SONIDO = pygame.mixer.Sound("assets/musica/game-over.mp3")
 
 CANTIDAD_VIDAS = 3
 PUNTUACION_ACIERTO = 100

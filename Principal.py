@@ -40,7 +40,7 @@ while corriendo:
     elif ventana_actual == "puntuaciones":
         ventana_actual = mostrar_rankings(pantalla,cola_eventos)
     elif ventana_actual == "terminado":
-        pass
+        ventana_actual = mostrar_rankings(pantalla,cola_eventos)
     elif ventana_actual == "salir":
         corriendo = False
     
