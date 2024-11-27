@@ -7,7 +7,16 @@ pygame.init()
 
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
-imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500)) 
+imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500))
+
+
+# INICIO DE CONTADOR 
+contador_timer = 30
+fuente = pygame.font.Font(None, 50)
+timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
+evento_timer = pygame.USEREVENT + 1
+timer_milisegundos = 1000
+pygame.time.set_timer(evento_timer, timer_milisegundos)
 
 COLOR_PREGUNTA = (134, 23, 219)  
 COLOR_RESPUESTA = (70, 130, 180)
@@ -40,7 +49,12 @@ random.shuffle(lista_preguntas)
 def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict) -> str:
     global indice
     global bandera_respuesta
-    
+    global contador_timer
+    global obtener_ultimo_tiempo
+
+    # renderizo el timer constantemente
+    timer = fuente.render(str(contador_timer), True, COLOR_NEGRO) 
+
     retorno = "juego"
     if bandera_respuesta:
         pygame.time.delay(250)
@@ -55,11 +69,28 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
             retorno = "salir"
+        # MANEJO DEL ESTADO DE ACTUALIZACION DEL TIMER
+        elif evento.type == evento_timer:
+            if contador_timer > 0:
+                contador_timer -= 1
+            else:
+                ERROR_SONIDO.play()
+                # ESTO PUEDE ESTAR O NO --> # if datos_juego["puntuacion"] > 0:
+                #datos_juego["puntuacion"] -= PUNTUACION_ERROR
+                datos_juego["cantidad_vidas"] -= 1
+                indice += 1
+
+                if indice == len(lista_preguntas):
+                    indice = 0
+                    random.shuffle(lista_preguntas)
+                contador_timer = 30
+                bandera_respuesta = True
+        ##############################################
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(lista_respuestas)):
                 if lista_respuestas[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
-                    
+
                     if respuesta_seleccionada == pregunta_actual["respuesta_correcta"]:
                         ACIERTO_SONIDO.play()
                         lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE)
@@ -76,10 +107,11 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                         indice = 0
                         random.shuffle(lista_preguntas)
                         
+
                     bandera_respuesta = True
 
     pantalla.blit(imagen_fondo, (0, 0))
-
+    pantalla.blit(timer, (200, 20))
     # Sombra y pregunta
     sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)
     pantalla.blit(sombra_pregunta, (82, 82))

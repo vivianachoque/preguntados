@@ -29,10 +29,9 @@ FUENTE_30 = pygame.font.SysFont("Arial",30)
 FUENTE_32 = pygame.font.SysFont("Arial",32)
 FUENTE_50 = pygame.font.SysFont("Arial",50)
 
-CLICK_SONIDO = pygame.mixer.Sound("click.mp3")
+CLICK_SONIDO = pygame.mixer.Sound("assets/musica/click.mp3")
 ACIERTO_SONIDO = pygame.mixer.Sound("assets/musica/correct.mp3")
 ERROR_SONIDO = pygame.mixer.Sound("assets/musica/wrong.mp3")
-
 
 CANTIDAD_VIDAS = 3
 PUNTUACION_ACIERTO = 100
