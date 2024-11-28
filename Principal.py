@@ -13,11 +13,16 @@ pygame.mixer.init()
 pantalla = pygame.display.set_mode(VENTANA)
 corriendo = True
 reloj = pygame.time.Clock()
-datos_juego = {"puntuacion":0,"cantidad_vidas":CANTIDAD_VIDAS,"nombre":"","volumen_musica":100}
+datos_juego = {"puntuacion":0,"cantidad_vidas":CANTIDAD_VIDAS,"nombre":"","volumen_musica":0}
 ventana_actual = "menu"
 bandera_juego = False
 
 
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ffd153f627e9814e0d8113aec14e217f01f8eba
 while corriendo:
     #Gestion de Eventos -> No lo programamos aca
     #Actualizacion de estados -> No lo programamos aca
