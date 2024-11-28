@@ -9,6 +9,7 @@ from Puntuaciones import *
 pygame.init()
 pygame.display.set_caption("JUEGO 314")
 pantalla = pygame.display.set_mode(VENTANA)
+
 corriendo = True
 reloj = pygame.time.Clock()
 datos_juego = {"puntuacion":0,"cantidad_vidas":CANTIDAD_VIDAS,"nombre":"","volumen_musica":0}

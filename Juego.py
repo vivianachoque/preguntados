@@ -1,5 +1,6 @@
 import pygame 
 import random
+import json
 from Funciones import * 
 from Preguntas import *  
 
@@ -39,7 +40,7 @@ cuadro_pregunta["rectangulo"] = cuadro_pregunta["superficie"].get_rect()
 
 lista_respuestas = []
 
-for i in range(3):
+for i in range(4):
     cuadro_respuesta = {}
     cuadro_respuesta["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA)
     cuadro_respuesta["rectangulo"] = cuadro_respuesta["superficie"].get_rect()
@@ -120,16 +121,17 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                     bandera_respuesta = True
 
     pantalla.blit(imagen_fondo, (0, 0))
-    pantalla.blit(timer, (200, 20))
+    pantalla.blit(timer, (240, 20))
     # Sombra y pregunta
-    sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)
+    sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)    
+    pantalla.blit(sombra_pregunta, (82, 72))
+    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 70))
+    
     boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
     
-    pantalla.blit(sombra_pregunta, (82, 82))
-    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 80))
 
     # Respuestas con hover y sombras
-    posiciones_respuestas = [(125, 245), (125, 315), (125, 385)]
+    posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
     
     for i, pos in enumerate(posiciones_respuestas):
         sombra = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA)
@@ -147,10 +149,12 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     mostrar_texto(lista_respuestas[0]["superficie"], f"{pregunta_actual['respuesta_1']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[1]["superficie"], f"{pregunta_actual['respuesta_2']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
+    mostrar_texto(lista_respuestas[3]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
+    
 
     # Puntuación y vidas
-    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (10, 10), FUENTE_25, COLOR_NEGRO)
-    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (10, 40), FUENTE_25, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (370, 10), FUENTE_18, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (370, 40), FUENTE_18, COLOR_NEGRO)
     
     mostrar_texto(boton_volver["superficie"],"VOLVER",(5,5),FUENTE_22,COLOR_BLANCO)
     

@@ -53,7 +53,7 @@ def mostrar_menu(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event
 
     pantalla.blit(imagen_fondo, (0, 0))
 
-    posiciones_botones = [(125, 180), (125, 250), (125, 320), (125, 390)]
+    posiciones_botones = [(125, 165), (125, 235), (125, 305), (125, 375)]
     textos_botones = ["JUGAR", "AJUSTES", "RANKINGS", "SALIR"]
     
     for i, (pos, texto) in enumerate(zip(posiciones_botones, textos_botones)):

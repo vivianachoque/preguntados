@@ -1,6 +1,6 @@
 import pygame
-# import json
-# import os
+import json
+import os
 from Constantes import *
 from Funciones import *
 
@@ -45,6 +45,8 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
+                print("VUELVE AL MENU")
+                
             
             
     # # Mostrando el ranking
@@ -66,8 +68,8 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
     #     return ranking_ordenado 
     
     
-    # pantalla.blit(imagen_fondo, (0, 0))
-    # boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
+    pantalla.blit(imagen_fondo, (0, 0))
+    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
     
         
 
