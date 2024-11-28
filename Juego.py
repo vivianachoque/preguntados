@@ -11,9 +11,7 @@ imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500))
 
 boton_volver = {}
-boton_volver["superficie"] = pygame.Surface(TAMAÑO_BOTON_VOLVER)
-boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
-boton_volver["superficie"].fill(COLOR_AZUL)
+boton_volver["rectangulo"] = pygame.Rect(40, 25, 70, 40)
 
 # INICIO DE CONTADOR 
 contador_timer = 30
@@ -127,8 +125,6 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     pantalla.blit(sombra_pregunta, (82, 72))
     cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 70))
     
-    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
-    
 
     # Respuestas con hover y sombras
     posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
@@ -156,7 +152,6 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (370, 10), FUENTE_18, COLOR_NEGRO)
     mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (370, 40), FUENTE_18, COLOR_NEGRO)
     
-    mostrar_texto(boton_volver["superficie"],"VOLVER",(5,5),FUENTE_22,COLOR_BLANCO)
     
     
     return retorno
