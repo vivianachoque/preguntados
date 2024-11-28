@@ -1,5 +1,6 @@
 import pygame 
 import random
+import json
 from Funciones import * 
 from Preguntas import *  
 
@@ -8,6 +9,12 @@ pygame.init()
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500)) 
+
+
+boton_volver = {}
+boton_volver["superficie"] = pygame.Surface(TAMAÑO_BOTON_VOLVER)
+boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
+boton_volver["superficie"].fill(COLOR_AZUL)
 
 COLOR_PREGUNTA = (134, 23, 219)  
 COLOR_RESPUESTA = (70, 130, 180)
@@ -52,14 +59,21 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     pregunta_actual = lista_preguntas[indice]
     pos_mouse = pygame.mouse.get_pos()
     
+    
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
             retorno = "salir"
         elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if boton_volver["rectangulo"].collidepoint(evento.pos):
+                CLICK_SONIDO.play()
+                retorno = "menu"
+                print("VUELVE AL MENU")
+                
+                                
             for i in range(len(lista_respuestas)):
                 if lista_respuestas[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
-                    
+                        
                     if respuesta_seleccionada == pregunta_actual["respuesta_correcta"]:
                         ACIERTO_SONIDO.play()
                         lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE)
@@ -70,15 +84,20 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                         if datos_juego["puntuacion"] > 0:
                             datos_juego["puntuacion"] -= PUNTUACION_ERROR
                         datos_juego["cantidad_vidas"] -= 1
+                            
                     indice += 1
-                    
+                        
                     if indice == len(lista_preguntas):
                         indice = 0
                         random.shuffle(lista_preguntas)
-                        
+                            
                     bandera_respuesta = True
 
+
     pantalla.blit(imagen_fondo, (0, 0))
+    
+    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
+    
 
     # Sombra y pregunta
     sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)
@@ -106,7 +125,10 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
 
     # Puntuación y vidas
-    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (10, 10), FUENTE_25, COLOR_NEGRO)
-    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (10, 40), FUENTE_25, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (300, 10), FUENTE_18, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (300, 40), FUENTE_18, COLOR_NEGRO)
+    
+    mostrar_texto(boton_volver["superficie"],"VOLVER",(5,5),FUENTE_22,COLOR_BLANCO)
+    
     
     return retorno

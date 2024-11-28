@@ -8,12 +8,15 @@ from Puntuaciones import *
 
 pygame.init()
 pygame.display.set_caption("JUEGO 314")
+pygame.mixer.init()
+
 pantalla = pygame.display.set_mode(VENTANA)
 corriendo = True
 reloj = pygame.time.Clock()
 datos_juego = {"puntuacion":0,"cantidad_vidas":CANTIDAD_VIDAS,"nombre":"","volumen_musica":100}
 ventana_actual = "menu"
 bandera_juego = False
+
 
 while corriendo:
     #Gestion de Eventos -> No lo programamos aca
@@ -27,8 +30,7 @@ while corriendo:
     elif ventana_actual == "juego":
         if bandera_juego == False:
             porcentaje_coma = datos_juego["volumen_musica"] / 100
-            pygame.mixer.init()
-            pygame.mixer.music.load("musica.mp3")
+            pygame.mixer.music.load("./assets/musica/musica.mp3")
             pygame.mixer.music.set_volume(porcentaje_coma)
             pygame.mixer.music.play(-1)
             bandera_juego = True
@@ -43,6 +45,8 @@ while corriendo:
         corriendo = False
     
     pygame.display.flip()
+    
 pygame.quit()
+    
     
     
