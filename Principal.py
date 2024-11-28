@@ -5,6 +5,7 @@ from Menu import *
 from Juego import *
 from Configuraciones import *
 from Puntuaciones import *
+from Terminado import *
 
 pygame.init()
 pygame.display.set_caption("JUEGO 314")
@@ -14,8 +15,6 @@ reloj = pygame.time.Clock()
 datos_juego = {"puntuacion":0,"cantidad_vidas":CANTIDAD_VIDAS,"nombre":"","volumen_musica":0}
 ventana_actual = "menu"
 bandera_juego = False
-
-
 
 while corriendo:
     #Gestion de Eventos -> No lo programamos aca
@@ -40,7 +39,7 @@ while corriendo:
     elif ventana_actual == "puntuaciones":
         ventana_actual = mostrar_rankings(pantalla,cola_eventos)
     elif ventana_actual == "terminado":
-        ventana_actual = mostrar_rankings(pantalla,cola_eventos)
+        ventana_actual = mostrar_terminado(pantalla,cola_eventos, datos_juego)
     elif ventana_actual == "salir":
         corriendo = False
     

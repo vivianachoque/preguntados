@@ -21,6 +21,10 @@ CUADRO_TEXTO = (250,60)
 TAMAÑO_BOTON_VOLUMEN = (60,60)
 TAMAÑO_BOTON_VOLVER = (100,40)
 
+# INPUT DE TERMINADO.PY
+
+RECT_TAM = (250, 35)  # Tamaño del rectángulo (ancho, alto)
+RECT_POS = (150,200)  # Posición del rectángulo (x, y)
 
 FUENTE_22 = pygame.font.SysFont("Arial",22)
 FUENTE_25 = pygame.font.SysFont("Arial",25)

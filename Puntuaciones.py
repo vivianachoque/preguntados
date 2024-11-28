@@ -19,7 +19,7 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
-    
+
     pantalla.fill(COLOR_BLANCO)
     boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(10,10))
 
