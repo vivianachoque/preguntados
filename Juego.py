@@ -9,6 +9,10 @@ ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500))
 
+boton_volver = {}
+boton_volver["superficie"] = pygame.Surface(TAMAÑO_BOTON_VOLVER)
+boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
+boton_volver["superficie"].fill(COLOR_AZUL)
 
 # INICIO DE CONTADOR
 contador_timer = 30
@@ -98,6 +102,11 @@ def mostrar_juego(
                 bandera_respuesta = True
         ##############################################
         elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if boton_volver["rectangulo"].collidepoint(evento.pos):
+                CLICK_SONIDO.play()
+                retorno = "menu"
+                print("VUELVE AL MENU")
+                
             for i in range(len(lista_respuestas)):
                 if lista_respuestas[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = i + 1
@@ -130,6 +139,8 @@ def mostrar_juego(
     sombra_pregunta = crear_superficie_redondeada(
         TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA
     )
+    boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
+    
     pantalla.blit(sombra_pregunta, (122, 62))
     cuadro_pregunta["rectangulo"] = pantalla.blit(
         cuadro_pregunta["superficie"], (120, 60)
@@ -175,19 +186,10 @@ def mostrar_juego(
         )
 
     # Puntuación y vidas
-    mostrar_texto(
-        pantalla,
-        f"PUNTUACION: {datos_juego['puntuacion']}",
-        (10, 10),
-        FUENTE_25,
-        COLOR_NEGRO,
-    )
-    mostrar_texto(
-        pantalla,
-        f"VIDAS: {datos_juego['cantidad_vidas']}",
-        (10, 40),
-        FUENTE_25,
-        COLOR_NEGRO,
-    )
-
+    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (10, 10), FUENTE_25, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (10, 40), FUENTE_25, COLOR_NEGRO)
+    
+    mostrar_texto(boton_volver["superficie"],"VOLVER",(5,5),FUENTE_22,COLOR_BLANCO)
+    
+    
     return retorno
