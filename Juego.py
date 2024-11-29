@@ -86,7 +86,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                 if indice == len(lista_preguntas):
                     indice = 0
                     random.shuffle(lista_preguntas)
-                contador_timer = 30
+                contador_timer = 16
                 bandera_respuesta = True
         ##############################################
         elif evento.type == pygame.MOUSEBUTTONDOWN:
