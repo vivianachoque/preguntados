@@ -69,30 +69,19 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
     FUENTE_22.render("Ranking", True, COLOR_BLANCO)
     for i, jugador in enumerate(ranking_jugadores):
         texto = f"{i+1}.{jugador['nombre']} - {jugador['puntuacion']} puntos"
+        texto_dos = f"{i+6}.{jugador['nombre']} - {jugador['puntuacion']} puntos"
+        
         texto_renderizado = FUENTE_22.render(texto, True, COLOR_NEGRO)
-        pantalla.blit(texto_renderizado,(100,100+i*40))
+        texto_renderizado_dos = FUENTE_22.render(texto_dos, True, COLOR_NEGRO)
         
-        
+        if i <= 4:
+            pantalla.blit(texto_renderizado,(50,128+i*51))
+            if i <= 9:  
+                pantalla.blit(texto_renderizado_dos,(268,128+i*51))
+             
   
     # posicion_jugadores=[(50,128),(50,179),(50,230),(50,281),(50,332),(268,128),(268,179),(268,230),(268,281),(268,332)]
-        
-    # #Columna izquierda
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,128))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,179))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,230))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,281))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,332))
-
-    # #Columna derecha
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,128))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,179))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,230))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,281))
-    # jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,332))
-    
-        
-    mostrar_texto(jugadores["superficie"], "PATO",(70,10), FUENTE_18, COLOR_NEGRO)
-            
+             
     return retorno
 
 
