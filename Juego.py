@@ -63,7 +63,6 @@ def mostrar_juego(
     global indice
     global bandera_respuesta
     global contador_timer
-    global obtener_ultimo_tiempo
 
     # Renderizo el timer constantemente
     timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
@@ -91,8 +90,13 @@ def mostrar_juego(
             if contador_timer > 0:
                 contador_timer -= 1
             else:
+                if datos_juego["cantidad_vidas"] == 1:
+                            GAME_OVER_SONIDO.play()
+                            retorno = "terminado"
+
                 ERROR_SONIDO.play()
                 datos_juego["cantidad_vidas"] -= 1
+                
                 indice += 1
 
                 if indice == len(lista_preguntas):
@@ -119,12 +123,18 @@ def mostrar_juego(
                         datos_juego["puntuacion"] += PUNTUACION_ACIERTO
                     else:
                         ERROR_SONIDO.play()
-                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(
-                            TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_ROJO
-                        )
-                        if datos_juego["puntuacion"] > 0:
+
+                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_ROJO)
+
+                        if datos_juego["cantidad_vidas"] == 1:
+                            GAME_OVER_SONIDO.play()
+                            retorno = "terminado"
+
+                        elif datos_juego["puntuacion"] > 0:
                             datos_juego["puntuacion"] -= PUNTUACION_ERROR
+                        
                         datos_juego["cantidad_vidas"] -= 1
+                    
                     indice += 1
 
                     if indice == len(lista_preguntas):

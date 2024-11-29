@@ -19,9 +19,15 @@ TAMAÑO_PREGUNTA = (300,100)
 TAMAÑO_RESPUESTA = (300,60)
 TAMAÑO_BOTON = (250,60)
 CUADRO_TEXTO = (250,60)
+
+
+RECT_TAM = (250, 35)  # Tamaño del rectángulo (ancho, alto)
+RECT_POS = (150,200)  # Posición del rectángulo (x, y)
+
 TAMAÑO_BOTON_VOLUMEN = (30,30)
 TAMAÑO_BOTON_VOLVER = (70,40)
 TAMAÑO_CUADRO_RANKING = (182,40)
+
 
 FUENTE_18 = pygame.font.SysFont("Arial",18)
 FUENTE_22 = pygame.font.SysFont("Arial",22)
@@ -31,6 +37,8 @@ FUENTE_30 = pygame.font.SysFont("Arial",30)
 FUENTE_32 = pygame.font.SysFont("Arial",32)
 FUENTE_50 = pygame.font.SysFont("Arial",50)
 
+
+GAME_OVER_SONIDO = pygame.mixer.Sound("./assets/musica/game-over.mp3")
 CLICK_SONIDO = pygame.mixer.Sound("./assets/musica/click.mp3")
 ACIERTO_SONIDO = pygame.mixer.Sound("./assets/musica/correct.mp3")
 ERROR_SONIDO = pygame.mixer.Sound("./assets/musica/wrong.mp3")

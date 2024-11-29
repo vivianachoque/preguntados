@@ -33,8 +33,6 @@ jugadores["superficie"].fill(COLOR_NEGRO)
 #     return guardar_datos
 
 
-
-
 def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event]) -> str:
     retorno = "puntuaciones"
     
@@ -45,8 +43,7 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
-            
-            
+
     # # Mostrando el ranking
     # #Leer archivo JSON
     # if os.path.exists(ranking):
