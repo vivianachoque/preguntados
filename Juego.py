@@ -2,8 +2,10 @@ import pygame
 import random
 from Funciones import *
 from Preguntas import *
+from Comodines import *
 
 pygame.init()
+
 
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
