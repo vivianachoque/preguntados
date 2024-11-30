@@ -28,8 +28,7 @@ TAMAÑO_BOTON_VOLUMEN = (30,30)
 TAMAÑO_BOTON_VOLVER = (70,40)
 TAMAÑO_CUADRO_RANKING = (182,40)
 
-
-FUENTE_18 = pygame.font.SysFont("Arial",18)
+FUENTE_18 = pygame.font.SysFont("Arial",16)
 FUENTE_22 = pygame.font.SysFont("Arial",22)
 FUENTE_25 = pygame.font.SysFont("Arial",25)
 FUENTE_27 = pygame.font.SysFont("Arial",27)

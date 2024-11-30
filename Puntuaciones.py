@@ -1,6 +1,6 @@
 import pygame
-# import json
-# import os
+import json
+import os
 from Constantes import *
 from Funciones import *
 
@@ -11,10 +11,9 @@ imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500))
 
 boton_volver = {}
-boton_volver["superficie"] = pygame.Surface(TAMAÑO_BOTON_VOLVER)
-boton_volver["rectangulo"] = boton_volver["superficie"].get_rect()
-# boton_volver["superficie"].fill(COLOR_AZUL)
+boton_volver["rectangulo"] = pygame.Rect(40, 25, 70, 40)
 
+    
 jugadores = {}
 jugadores["superficie"] = pygame.Surface(TAMAÑO_CUADRO_RANKING)
 jugadores["rectangulo"] = jugadores["superficie"].get_rect()
@@ -22,9 +21,8 @@ jugadores["superficie"].fill(COLOR_NEGRO)
 
 
 # # Archivo JSON para el ranking
-# ranking = "partidas.json"
-        
-
+ranking = "partidas.json"
+    
 
 # def guardar_ranking(ranking):    
     
@@ -32,8 +30,27 @@ jugadores["superficie"].fill(COLOR_NEGRO)
 #         guardar_datos = json.dump(ranking, archivo, indent=4)
 #     return guardar_datos
 
+def leer_json(ranking):
+    #Leer archivo JSON
+    if os.path.exists(ranking):
+        with open(ranking, "r") as archivo:
+            lista_ranking = json.load(archivo)            
+    else:
+        print("La lista de ranking no existe")
 
-def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event]) -> str:
+    # Ordenar los datos por el puntaje en orden descendente
+    ranking_ordenado = sorted(lista_ranking, key=lambda x: x['puntuacion'], reverse=True)
+    
+    return ranking_ordenado
+    # Imprimir el ranking
+    # for posicion, jugador in enumerate(ranking_ordenado, start=1):
+    #     print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
+    #     return ranking_ordenado 
+
+
+
+
+def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event],ranking) -> str:
     retorno = "puntuaciones"
     
     for evento in cola_eventos:
@@ -43,48 +60,25 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
+                print("VUELVE AL MENU")
 
-    # # Mostrando el ranking
-    # #Leer archivo JSON
-    # if os.path.exists(ranking):
-    #     with open(ranking, "r") as archivo:
-    #         lista_ranking = json.load(archivo)
-    # else:
-    #     print("La lista de ranking no existe")
-
-
-    # # Ordenar los datos por el puntaje en orden descendente
-    # ranking_ordenado = sorted(lista_ranking, key=lambda x: x['puntuacion'], reverse=True)
-
-    # # Imprimir el ranking
-    # for posicion, jugador in enumerate(ranking_ordenado, start=1):
-    #     print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
-
-    #     return ranking_ordenado 
     
+    pantalla.blit(imagen_fondo, (0, 0))    
     
-    # pantalla.blit(imagen_fondo, (0, 0))
-    # boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
-    
+    ranking_jugadores = leer_json(ranking)
+    FUENTE_22.render("Ranking", True, COLOR_BLANCO)
+    for i, jugador in enumerate(ranking_jugadores):
+        texto = f"{i+1}.{jugador['nombre']} - {jugador['puntuacion']} puntos"        
+        texto_renderizado = FUENTE_22.render(texto, True, COLOR_NEGRO)
         
-
-    #Columna izquierda
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,128))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,179))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,230))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,281))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(50,332))
-
-    #Columna derecha
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,128))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,179))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,230))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,281))
-    jugadores["rectangulo"] = pantalla.blit(jugadores["superficie"],(268,332))
-    
-    mostrar_texto(jugadores["superficie"], "PATO",(70,10), FUENTE_18, COLOR_BLANCO)
-    
-
-    mostrar_texto(boton_volver["superficie"],"VOLVER",(5,5),FUENTE_22,COLOR_BLANCO)
-        
+        if i <= 4:
+            pantalla.blit(texto_renderizado,(50,130+i*51))
+        elif i <= 9:
+            pantalla.blit(texto_renderizado,(268,-124+i*51))
+             
+  
+    # posicion_jugadores=[(50,128),(50,179),(50,230),(50,281),(50,332),(268,128),(268,179),(268,230),(268,281),(268,332)]
+             
     return retorno
+
+
