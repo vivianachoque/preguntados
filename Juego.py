@@ -21,6 +21,7 @@ evento_timer = pygame.USEREVENT + 1
 timer_milisegundos = 1000
 pygame.time.set_timer(evento_timer, timer_milisegundos)
 
+#CAMBIAR A CONSTANTES
 COLOR_PREGUNTA = (134, 23, 219)  
 COLOR_RESPUESTA = (70, 130, 180)
 COLOR_RESPUESTA_HOVER = (100, 149, 237, 150) #Corregir porque se rompe al hacer hover
@@ -44,6 +45,9 @@ for i in range(4):
     cuadro_respuesta["rectangulo"] = cuadro_respuesta["superficie"].get_rect()
     cuadro_respuesta["hover"] = False
     lista_respuestas.append(cuadro_respuesta)
+    
+    
+#FUNCIONES EN FUNCIONES   
     
 indice = 0 
 bandera_respuesta = False 
@@ -95,6 +99,8 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                 retorno = "menu"
                 print("VUELVE AL MENU")
                 
+                
+            #VA EN FUNCIONES. ARMARLA (detectar_click)    
             for i in range(len(lista_respuestas)):
                 if lista_respuestas[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = (i + 1)
