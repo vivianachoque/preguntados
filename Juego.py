@@ -1,10 +1,14 @@
 import pygame
 import random
+from Preguntas import *
+from Comodines import *
 import json
 from Funciones import * 
 from Preguntas import *  
 
+
 pygame.init()
+
 
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)

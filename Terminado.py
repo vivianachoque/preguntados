@@ -10,6 +10,13 @@ caja_usuario["superficie"] = pygame.Surface(RECT_TAM)
 caja_usuario["rectangulo"] = caja_usuario["superficie"].get_rect()
 caja_usuario["superficie"].fill(COLOR_NEGRO)
 
+boton_enviar_usuario = {}
+boton_enviar_usuario["superficie"] = pygame.Surface((100,30))
+boton_enviar_usuario["rectangulo"] = boton_enviar_usuario["superficie"].get_rect()
+boton_enviar_usuario["superficie"].fill(COLOR_NEGRO)
+
+
+
 texto_usuario = "Ingrese su nombre..."
 fuente_texto_usuario = pygame.font.Font(None, 32)
 
@@ -45,9 +52,10 @@ def mostrar_terminado(pantalla: pygame.Surface, cola_eventos: list[pygame.event.
     pantalla.fill(COLOR_BLANCO)
 
     caja_usuario["rectangulo"] = pantalla.blit(caja_usuario["superficie"],RECT_POS)
+    boton_enviar_usuario["rectangulo"] = pantalla.blit(boton_enviar_usuario["superficie"],(220, 250))
     mostrar_texto(pantalla,"JUEGO TERMINADO",(135,20),FUENTE_25,COLOR_NEGRO)
     mostrar_texto(pantalla,f"Su puntuacion fue de: {datos_juego["puntuacion"]} puntos.",(100,100),FUENTE_25,COLOR_NEGRO)
-    """ mostrar_texto(caja_usuario["superficie"],texto_usuario,(0,10),FUENTE_22,COLOR_NEGRO) """
+    mostrar_texto(boton_enviar_usuario["superficie"],"Enviar",(17,3),FUENTE_22,COLOR_BLANCO)
 
 
     superficie_texto_usuario = fuente_texto_usuario.render(texto_usuario,True, COLOR_BLANCO)
