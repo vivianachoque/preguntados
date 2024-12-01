@@ -59,13 +59,6 @@ def mostrar_ajustes(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event
     pantalla.blit(imagen_fondo, (0, 0))
     
     
-    # boton_resta_musica["rectangulo"] = pantalla.blit(boton_resta_musica["superficie"],(360,142)) #musica
-    # boton_suma_musica["rectangulo"] = pantalla.blit(boton_suma_musica["superficie"],(410,142))  #musica
-    # boton_silenciar["rectangulo"] = pantalla.blit(boton_silenciar["superficie"],(310,142))
-
-    
-    # boton_volver["rectangulo"] = pantalla.blit(boton_volver["superficie"],(40,25))
-    
     mostrar_texto(pantalla,f"{datos_juego["volumen_musica"]} %",(140,142),FUENTE_27,COLOR_NEGRO) #volumen musica
 
     

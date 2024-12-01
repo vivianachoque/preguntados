@@ -20,7 +20,7 @@ jugadores["rectangulo"] = jugadores["superficie"].get_rect()
 jugadores["superficie"].fill(COLOR_NEGRO)
 
 
-# # Archivo JSON para el ranking
+# Archivo JSON para el ranking
 ranking = "partidas.json"
     
 
@@ -49,7 +49,6 @@ def leer_json(ranking):
 
 
 
-
 def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event],ranking) -> str:
     retorno = "puntuaciones"
     
@@ -74,11 +73,8 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
         if i <= 4:
             pantalla.blit(texto_renderizado,(50,130+i*51))
         elif i <= 9:
-            pantalla.blit(texto_renderizado,(268,-124+i*51))
-             
-  
-    # posicion_jugadores=[(50,128),(50,179),(50,230),(50,281),(50,332),(268,128),(268,179),(268,230),(268,281),(268,332)]
-             
+            pantalla.blit(texto_renderizado,(270,-124+i*51))
+                          
     return retorno
 
 
