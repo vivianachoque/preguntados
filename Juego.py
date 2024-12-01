@@ -1,10 +1,10 @@
 import pygame
 import random
 from Preguntas import *
-from Comodines import *
-import json
+# from Comodines import *
 from Funciones import * 
 from Preguntas import *  
+from Constantes import *
 
 
 pygame.init()
@@ -18,17 +18,12 @@ boton_volver = {}
 boton_volver["rectangulo"] = pygame.Rect(40, 25, 70, 40)
 
 # INICIO DE CONTADOR
-contador_timer = 30
+contador_timer = 15
 fuente = pygame.font.Font(None, 50)
 timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
 evento_timer = pygame.USEREVENT + 1
 timer_milisegundos = 1000
 pygame.time.set_timer(evento_timer, timer_milisegundos)
-
-COLOR_PREGUNTA = (134, 23, 219)
-COLOR_RESPUESTA = (70, 130, 180)
-COLOR_RESPUESTA_HOVER = (100, 149, 237, 150)  # Corregir porque se rompe al hacer hover
-COLOR_SOMBRA = (50, 100, 150)
 
 
 def crear_superficie_redondeada(width, height, radius, color):
@@ -39,18 +34,14 @@ def crear_superficie_redondeada(width, height, radius, color):
 
 
 cuadro_pregunta = {}
-cuadro_pregunta["superficie"] = crear_superficie_redondeada(
-    TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_PREGUNTA
-)
+cuadro_pregunta["superficie"] = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_NEGRO)
 cuadro_pregunta["rectangulo"] = cuadro_pregunta["superficie"].get_rect()
 
 lista_respuestas = []
 
 for i in range(4):
     cuadro_respuesta = {}
-    cuadro_respuesta["superficie"] = crear_superficie_redondeada(
-        TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA
-    )
+    cuadro_respuesta["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA)
     cuadro_respuesta["rectangulo"] = cuadro_respuesta["superficie"].get_rect()
     cuadro_respuesta["hover"] = False
     lista_respuestas.append(cuadro_respuesta)
@@ -60,9 +51,7 @@ bandera_respuesta = False
 random.shuffle(lista_preguntas)
 
 
-def mostrar_juego(
-    pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict
-) -> str:
+def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict) -> str:
     global indice
     global bandera_respuesta
     global contador_timer
@@ -74,7 +63,7 @@ def mostrar_juego(
     if bandera_respuesta:
         pygame.time.delay(250)
         cuadro_pregunta["superficie"] = crear_superficie_redondeada(
-            TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_PREGUNTA
+            TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_NEGRO
         )
         for i in range(len(lista_respuestas)):
             lista_respuestas[i]["superficie"] = crear_superficie_redondeada(
@@ -147,37 +136,26 @@ def mostrar_juego(
                     bandera_respuesta = True
 
     pantalla.blit(imagen_fondo, (0, 0))
-    pantalla.blit(timer, (240, 20))
-    # Sombra y pregunta
-    sombra_pregunta = crear_superficie_redondeada(TAMAÑO_PREGUNTA[0], TAMAÑO_PREGUNTA[1], 15, COLOR_SOMBRA)    
-    pantalla.blit(sombra_pregunta, (82, 72))
-    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (80, 70))
-    
+    pantalla.blit(timer, (220, 20))
 
+    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (65, 70))
+    
     # Respuestas con hover y sombras
     posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
     
     for i, pos in enumerate(posiciones_respuestas):
-        sombra = crear_superficie_redondeada(
-            TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA
-        )
+        sombra = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA)
         pantalla.blit(sombra, (pos[0] + 2, pos[1] + 2))
-
-        boton_rect = pygame.Rect(
-            pos[0], pos[1], TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1]
-        )
+        boton_rect = pygame.Rect(pos[0], pos[1], TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1])
+        
         if boton_rect.collidepoint(pos_mouse):
-            superficie_hover = crear_superficie_redondeada(
-                TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_RESPUESTA_HOVER
-            )
+            superficie_hover = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_BOTON_HOVER)
             lista_respuestas[i]["rectangulo"] = pantalla.blit(superficie_hover, pos)
         else:
-            lista_respuestas[i]["rectangulo"] = pantalla.blit(
-                lista_respuestas[i]["superficie"], pos
-            )
+            lista_respuestas[i]["rectangulo"] = pantalla.blit(lista_respuestas[i]["superficie"], pos)
 
     # Texto
-    mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_27, COLOR_BLANCO)
+    mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[0]["superficie"], f"{pregunta_actual['respuesta_1']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[1]["superficie"], f"{pregunta_actual['respuesta_2']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
@@ -185,8 +163,8 @@ def mostrar_juego(
     
 
     # Puntuación y vidas
-    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (370, 10), FUENTE_18, COLOR_NEGRO)
-    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (370, 40), FUENTE_18, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (350, 10), FUENTE_18, COLOR_NEGRO)
+    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (350, 40), FUENTE_18, COLOR_NEGRO)
     
     
     

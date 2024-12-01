@@ -8,10 +8,6 @@ ruta_fondo = "./assets/imagenes/menu.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
 imagen_fondo = pygame.transform.scale(imagen_fondo, (500, 500))
 
-COLOR_BOTON = (70, 130, 180)  
-COLOR_BOTON_HOVER = (100, 149, 237)
-COLOR_TEXTO = (255, 255, 255)
-COLOR_SOMBRA = (50, 100, 150)
 
 lista_botones = []
 

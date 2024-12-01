@@ -24,11 +24,13 @@ jugadores["superficie"].fill(COLOR_NEGRO)
 ranking = "partidas.json"
     
 
-# def guardar_ranking(ranking):    
+def guardar_ranking(ranking):    
     
-#     with open('partidas.json', "w") as archivo:
-#         guardar_datos = json.dump(ranking, archivo, indent=4)
-#     return guardar_datos
+    with open('partidas.json', "w") as archivo:
+        guardar_datos = json.dump(ranking, archivo, indent=4)
+    return guardar_datos
+
+
 
 def leer_json(ranking):
     #Leer archivo JSON
@@ -41,11 +43,11 @@ def leer_json(ranking):
     # Ordenar los datos por el puntaje en orden descendente
     ranking_ordenado = sorted(lista_ranking, key=lambda x: x['puntuacion'], reverse=True)
     
-    return ranking_ordenado
     # Imprimir el ranking
-    # for posicion, jugador in enumerate(ranking_ordenado, start=1):
-    #     print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
-    #     return ranking_ordenado 
+    for posicion, jugador in enumerate(ranking_ordenado, start=1):
+        print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
+    
+    return ranking_ordenado 
 
 
 
