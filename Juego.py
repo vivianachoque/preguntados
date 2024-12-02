@@ -2,9 +2,17 @@ import pygame
 import random
 import json
 from Funciones import * 
-from Preguntas import *  
+#from Preguntas import *  
+import csv 
 
+with open('preguntas.csv', 'r', encoding='utf-8') as file:
+    reader = csv.DictReader(file)
+    lista_preguntas = list(reader)
 pygame.init()
+
+for pregunta in lista_preguntas:
+    pregunta['respuesta_correcta'] = int(pregunta['respuesta_correcta'])
+
 
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
 imagen_fondo = pygame.image.load(ruta_fondo)
@@ -56,9 +64,7 @@ bandera_respuesta = False
 random.shuffle(lista_preguntas)
 
 
-def mostrar_juego(
-    pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict
-) -> str:
+def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict) -> str:
     global indice
     global bandera_respuesta
     global contador_timer
@@ -80,6 +86,7 @@ def mostrar_juego(
 
     pregunta_actual = lista_preguntas[indice]
     pos_mouse = pygame.mouse.get_pos()
+    
 
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
@@ -177,13 +184,11 @@ def mostrar_juego(
     mostrar_texto(lista_respuestas[0]["superficie"], f"{pregunta_actual['respuesta_1']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[1]["superficie"], f"{pregunta_actual['respuesta_2']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-    mostrar_texto(lista_respuestas[3]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
+    mostrar_texto(lista_respuestas[3]["superficie"], f"{pregunta_actual['respuesta_4']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     
 
     # Puntuación y vidas
     mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (370, 10), FUENTE_18, COLOR_NEGRO)
     mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (370, 40), FUENTE_18, COLOR_NEGRO)
-    
-    
     
     return retorno

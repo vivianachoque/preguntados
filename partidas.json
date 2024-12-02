@@ -1,13 +1,6 @@
 [
-    {"nombre": "Alice", "puntuacion": 95},
-    {"nombre": "Bob", "puntuacion": 85},
-    {"nombre": "Charlie", "puntuacion": 78},
-    {"nombre": "Diana", "puntuacion": 88},
-    {"nombre": "Eve", "puntuacion": 92},
-    {"nombre": "Frank", "puntuacion": 76},
-    {"nombre": "Grace", "puntuacion": 99},
-    {"nombre": "Hank", "puntuacion": 81},
-    {"nombre": "Ivy", "puntuacion": 89},
-    {"nombre": "Jack", "puntuacion": 91},
-    {"nombre": "Karen", "puntuacion": 87}
+    {
+        "nombre": "papapap",
+        "puntuacion": 275
+    }
 ]
