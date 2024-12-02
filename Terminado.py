@@ -52,12 +52,12 @@ def mostrar_terminado(pantalla: pygame.Surface, cola_eventos: list[pygame.event.
                 input_activado = False
 
             if boton_enviar_usuario["rectangulo"].collidepoint(evento.pos):
-                ranking = [{"nombre":texto_usuario,"puntuacion":datos_juego["puntuacion"]}]
-                ranking.append(guardar_ranking(ranking))
+                ranking = leer_json()
+                nuevo_jugador = {"nombre": texto_usuario,"puntuacion": datos_juego["puntuacion"]}
+                ranking.append(nuevo_jugador)
+                guardar_ranking(ranking)
                 print("Se guardo el jugador")
-                
-                if boton_enviar_usuario["rectangulo"].collidepoint(mouse_pos):
-                    mostrar_texto(pantalla,f"Puntuacion guardada",(245,330),FUENTE_20,COLOR_NEGRO)  
+                mostrar_texto(pantalla,f"Puntuacion guardada",(170,360),FUENTE_20,COLOR_NEGRO) 
             else:
                 print("No se guardo el jugador")
                 
