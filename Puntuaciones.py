@@ -22,20 +22,21 @@ jugadores["superficie"].fill(COLOR_NEGRO)
 
 # Archivo JSON para el ranking
 ranking = "partidas.json"
-    
+   
+   
 
 def guardar_ranking(ranking):    
     
     with open('partidas.json', "w") as archivo:
         guardar_datos = json.dump(ranking, archivo, indent=4)
     return guardar_datos
+ 
 
-
-
-def leer_json(ranking):
+def leer_json():
     #Leer archivo JSON
+    
     if os.path.exists(ranking):
-        with open(ranking, "r") as archivo:
+        with open('partidas.json', "r") as archivo:
             lista_ranking = json.load(archivo)            
     else:
         print("La lista de ranking no existe")
@@ -44,10 +45,10 @@ def leer_json(ranking):
     ranking_ordenado = sorted(lista_ranking, key=lambda x: x['puntuacion'], reverse=True)
     
     # Imprimir el ranking
-    for posicion, jugador in enumerate(ranking_ordenado, start=1):
-        print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
-    
-    return ranking_ordenado 
+    # for posicion, jugador in enumerate(ranking_ordenado, start=1):
+    #     print(f"{posicion}. {jugador['nombre']} - {jugador['puntuacion']} puntos")
+        
+    return ranking_ordenado
 
 
 
@@ -66,8 +67,9 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
     
     pantalla.blit(imagen_fondo, (0, 0))    
     
-    ranking_jugadores = leer_json(ranking)
+    ranking_jugadores = leer_json()
     FUENTE_22.render("Ranking", True, COLOR_BLANCO)
+    
     for i, jugador in enumerate(ranking_jugadores):
         texto = f"{i+1}.{jugador['nombre']} - {jugador['puntuacion']} puntos"        
         texto_renderizado = FUENTE_22.render(texto, True, COLOR_NEGRO)

@@ -50,7 +50,7 @@ FUENTE_32 = pygame.font.SysFont("Arial",32)
 FUENTE_50 = pygame.font.SysFont("Arial",50)
 
 
-GAME_OVER_SONIDO = pygame.mixer.Sound("./assets/musica/game-over.mp3")
+GAME_OVER_SONIDO = pygame.mixer.Sound("./assets/musica/game_over.mp3")
 CLICK_SONIDO = pygame.mixer.Sound("./assets/musica/click.mp3")
 ACIERTO_SONIDO = pygame.mixer.Sound("./assets/musica/correct.mp3")
 ERROR_SONIDO = pygame.mixer.Sound("./assets/musica/wrong.mp3")
