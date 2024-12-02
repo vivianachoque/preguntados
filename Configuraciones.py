@@ -50,11 +50,9 @@ def mostrar_ajustes(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event
                     pygame.mixer.music.get_volume()
                     pygame.mixer.music.set_volume(0.0)                     
                     datos_juego["volumen_musica"] = 0
-                    print("SILENCIA VOLUMEN MUSICA")
             elif boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
-                print("VUELVE AL MENU")
     
     pantalla.blit(imagen_fondo, (0, 0))
     

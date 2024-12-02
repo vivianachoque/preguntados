@@ -33,7 +33,6 @@ def cambiar_volumen_musica(subir=True):
         nuevo_volumen = max(0.0, volumen_actual - 0.1)
         
     pygame.mixer.music.set_volume(nuevo_volumen)
-    print(f"Nuevo volumen: {nuevo_volumen}")
     
 
     
@@ -43,5 +42,4 @@ def cambiar_volumen_silencio(silencio=True):
         nuevo_volumen = max(0.0, volumen_actual - 0.0)
     
     pygame.mixer.music.set_volume(nuevo_volumen)
-    print(f"Nuevo volumen: {nuevo_volumen}")
     

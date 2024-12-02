@@ -38,8 +38,6 @@ def leer_json():
     if os.path.exists(ranking):
         with open('partidas.json', "r") as archivo:
             lista_ranking = json.load(archivo)            
-    else:
-        print("La lista de ranking no existe")
 
     # Ordenar los datos por el puntaje en orden descendente
     ranking_ordenado = sorted(lista_ranking, key=lambda x: x['puntuacion'], reverse=True)
@@ -62,7 +60,6 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
                 retorno = "menu"
-                print("VUELVE AL MENU")
 
     
     pantalla.blit(imagen_fondo, (0, 0))    
