@@ -130,19 +130,24 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     # Respuestas con hover y sombras
     posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
     for i, pos in enumerate(posiciones_respuestas):
+        # Crear sombra
         sombra = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA)
         pantalla.blit(sombra, (pos[0] + 2, pos[1] + 2))
+        
         boton_rect = pygame.Rect(pos[0], pos[1], TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1])
+        superficie_actual = None
+        
         if boton_rect.collidepoint(pos_mouse):
-            superficie_hover = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_BOTON_HOVER)
-            lista_respuestas[i]["rectangulo"] = pantalla.blit(superficie_hover, pos)
+            superficie_actual = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_BOTON_HOVER)
         else:
-            lista_respuestas[i]["rectangulo"] = pantalla.blit(lista_respuestas[i]["superficie"], pos)
+            superficie_actual = lista_respuestas[i]["superficie"]
+            
+        # Agregar el texto a la superficie antes de hacer hoveR
+        mostrar_texto(superficie_actual, f"{pregunta_actual[f'respuesta_{i+1}']}", (20, 20), FUENTE_22, COLOR_BLANCO)
+        lista_respuestas[i]["rectangulo"] = pantalla.blit(superficie_actual, pos)
 
-    # Mostrar texto de preguntas y respuestas
+    # Mostrar texto de pregunta
     mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-    for i in range(4):
-        mostrar_texto(lista_respuestas[i]["superficie"], f"{pregunta_actual[f'respuesta_{i+1}']}", (20, 20), FUENTE_22, COLOR_BLANCO)
 
     # Mostrar puntuación y vidas
     mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (350, 10), FUENTE_18, COLOR_NEGRO)
