@@ -66,17 +66,18 @@ indice = 0
 bandera_respuesta = False
 random.shuffle(lista_preguntas)
 
-# Seteo en False las banderas de los comodines
+# Seteo de contador para ganar una vida tras 5 rondas seguidas ganadas
+contador_rondas_seguidas_ganadas = 0
 
+# Seteo en False las banderas de los comodines
 bandera_comodin_x2 = False # Esta bandera corresponde a cuando el comodin se pone en True una ronda y luego vuelve a setearse en False.
 bandera_por_partida_comodin_x2 = False # Esta bandera corresponde a cuando el comodin se pone en True y queda asi toda la partida.
 
-bandera_comodin_pasar_pregunta = False 
 bandera_por_partida_comodin_pasar_pregunta = False
 
 # Función principal para mostrar el juego
 def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict) -> str:
-    global indice, bandera_respuesta, contador_timer, bandera_por_partida_comodin_x2, bandera_comodin_x2,bandera_por_partida_comodin_pasar_pregunta
+    global indice, bandera_respuesta, contador_timer, bandera_por_partida_comodin_x2, bandera_comodin_x2,bandera_por_partida_comodin_pasar_pregunta, contador_rondas_seguidas_ganadas
 
     # Renderizar el timer constantemente
     timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
@@ -110,6 +111,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                     indice = 0
                     random.shuffle(lista_preguntas)
                 contador_timer = 25
+                contador_rondas_seguidas_ganadas = 0
                 if bandera_comodin_x2 == True:
                     bandera_comodin_x2 = False
                 bandera_respuesta = True
@@ -142,7 +144,14 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                     if respuesta_seleccionada == pregunta_actual["respuesta_correcta"]:
                         ACIERTO_SONIDO.play()
                         lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE)
+                        contador_rondas_seguidas_ganadas += 1
+    
+                        if contador_rondas_seguidas_ganadas == 5:
+                            datos_juego["cantidad_vidas"] += 1
+                            contador_rondas_seguidas_ganadas = 0
+                            print(f"GANASTE UNA VIDA")
 
+                        print(f"contador rondas ganadas: {contador_rondas_seguidas_ganadas}")
                         if bandera_comodin_x2 == False:
                             datos_juego["puntuacion"] += PUNTUACION_ACIERTO
                         else:
@@ -151,6 +160,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
 
                     else:
                         ERROR_SONIDO.play()
+                        contador_rondas_seguidas_ganadas = 0
                         lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_ROJO)
                         if datos_juego["cantidad_vidas"] == 1:
                             GAME_OVER_SONIDO.play()
