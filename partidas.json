@@ -4,6 +4,10 @@
         "puntuacion": 250
     },
     {
+        "nombre": "Sabrina",
+        "puntuacion": 200
+    },
+    {
         "nombre": "Pepe",
         "puntuacion": 50
     },
@@ -12,7 +16,7 @@
         "puntuacion": 0
     },
     {
-        "nombre": "Sabrina",
-        "puntuacion": 200
+        "nombre": "santiago",
+        "puntuacion": 175
     }
 ]

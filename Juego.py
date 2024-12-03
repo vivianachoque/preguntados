@@ -1,7 +1,7 @@
 import pygame
 import random
 from Preguntas import *
-# from Comodines import *
+from Comodines import *
 from Funciones import * 
 from Preguntas import *  
 from Constantes import *
@@ -18,7 +18,7 @@ boton_volver = {}
 boton_volver["rectangulo"] = pygame.Rect(40, 25, 70, 40)
 
 # INICIO DE CONTADOR
-contador_timer = 15
+contador_timer = 40
 fuente = pygame.font.Font(None, 50)
 timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
 evento_timer = pygame.USEREVENT + 1
@@ -50,11 +50,17 @@ indice = 0
 bandera_respuesta = False
 random.shuffle(lista_preguntas)
 
+# BANDERA COMODIN
+
+bandera_comodin_x2 = False
+bandera_por_partida_comodin_x2 = False
 
 def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Event], datos_juego: dict) -> str:
     global indice
     global bandera_respuesta
     global contador_timer
+    global bandera_comodin_x2
+    global bandera_por_partida_comodin_x2
 
     # Renderizo el timer constantemente
     timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
@@ -94,7 +100,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                 if indice == len(lista_preguntas):
                     indice = 0
                     random.shuffle(lista_preguntas)
-                contador_timer = 16
+                contador_timer = 40
                 bandera_respuesta = True
         ##############################################
         elif evento.type == pygame.MOUSEBUTTONDOWN:
@@ -103,16 +109,24 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                 retorno = "menu"
                 print("VUELVE AL MENU")
                 
+            elif comodin_x2["rectangulo"].collidepoint(evento.pos):
+                if bandera_por_partida_comodin_x2 == False:
+                    bandera_comodin_x2 = True
+                    bandera_por_partida_comodin_x2 = True
+                
+                print("SOY EL COMODIN X2, ME ESTAS CLICKEANDO")
             for i in range(len(lista_respuestas)):
                 if lista_respuestas[i]["rectangulo"].collidepoint(evento.pos):
                     respuesta_seleccionada = i + 1
 
                     if respuesta_seleccionada == pregunta_actual["respuesta_correcta"]:
                         ACIERTO_SONIDO.play()
-                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(
-                            TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE
-                        )
-                        datos_juego["puntuacion"] += PUNTUACION_ACIERTO
+                        lista_respuestas[i]["superficie"] = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_VERDE)
+                        if bandera_comodin_x2 == False:
+                            datos_juego["puntuacion"] += PUNTUACION_ACIERTO
+                        else:
+                            datos_juego["puntuacion"] += multiplicar_puntos_por_dos()
+                            bandera_comodin_x2 = False
                     else:
                         ERROR_SONIDO.play()
 
@@ -139,6 +153,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     pantalla.blit(timer, (220, 20))
 
     cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (65, 70))
+    comodin_x2["rectangulo"] = pantalla.blit(comodin_x2["superficie"], (430, 255))
     
     # Respuestas con hover y sombras
     posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
