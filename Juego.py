@@ -118,6 +118,18 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
 
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             if boton_volver["rectangulo"].collidepoint(evento.pos):
+                datos_juego["puntuacion"] = 0
+                datos_juego["cantidad_vidas"] = CANTIDAD_VIDAS
+                contador_timer = 25
+                contador_rondas_seguidas_ganadas = 0
+                bandera_comodin_x2 = False
+                bandera_por_partida_comodin_pasar_pregunta = False
+                bandera_por_partida_comodin_x2 = False
+                indice += 1
+                if indice == len(lista_preguntas):
+                    indice = 0
+                    random.shuffle(lista_preguntas)
+                bandera_respuesta = True
                 CLICK_SONIDO.play()
                 retorno = "menu"
 

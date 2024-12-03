@@ -41,6 +41,9 @@ def mostrar_terminado(pantalla: pygame.Surface, cola_eventos: list[pygame.event.
             mouse_pos = pygame.mouse.get_pos()
             if boton_volver["rectangulo"].collidepoint(evento.pos):
                 CLICK_SONIDO.play()
+                datos_juego["puntuacion"] = 0
+                datos_juego["cantidad_vidas"] = CANTIDAD_VIDAS
+                datos_juego["nombre"] = ""
                 retorno = "menu"
                 print("VUELVE AL MENU")
                 
