@@ -1,13 +1,18 @@
 import pygame
 import random
-from Preguntas import *
+#from Preguntas import *
 # from Comodines import *
 from Funciones import * 
-from Preguntas import *  
 from Constantes import *
+import csv 
 
-
+with open('preguntas.csv', 'r', encoding='utf-8') as file:
+    reader = csv.DictReader(file)
+    lista_preguntas = list(reader)
 pygame.init()
+
+for pregunta in lista_preguntas:
+    pregunta['respuesta_correcta'] = int(pregunta['respuesta_correcta'])
 
 
 ruta_fondo = "./assets/imagenes/preguntas.jpg"
@@ -73,6 +78,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
 
     pregunta_actual = lista_preguntas[indice]
     pos_mouse = pygame.mouse.get_pos()
+    
 
     for evento in cola_eventos:
         if evento.type == pygame.QUIT:
@@ -159,7 +165,7 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
     mostrar_texto(lista_respuestas[0]["superficie"], f"{pregunta_actual['respuesta_1']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[1]["superficie"], f"{pregunta_actual['respuesta_2']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     mostrar_texto(lista_respuestas[2]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-    mostrar_texto(lista_respuestas[3]["superficie"], f"{pregunta_actual['respuesta_3']}", (20, 20), FUENTE_22, COLOR_BLANCO)
+    mostrar_texto(lista_respuestas[3]["superficie"], f"{pregunta_actual['respuesta_4']}", (20, 20), FUENTE_22, COLOR_BLANCO)
     
 
     # Puntuación y vidas
