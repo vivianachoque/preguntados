@@ -8,9 +8,9 @@ from Constantes import *
 pygame.init()
 
 # Cargar preguntas desde un archivo CSV
-with open('preguntas.csv', 'r', encoding='utf-8') as file:
-    reader = csv.DictReader(file)
-    lista_preguntas = list(reader)
+with open('preguntas.csv', 'r', encoding='utf-8') as file: #esto es para que lea los tildes y ñ
+    reader = csv.DictReader(file) #esto es para que lea el archivo como un diccionario
+    lista_preguntas = list(reader) #esto es para que lo lea como una lista
 
 # Convertir respuestas correctas a enteros
 for pregunta in lista_preguntas:
@@ -30,13 +30,6 @@ timer = fuente.render(str(contador_timer), True, COLOR_NEGRO)
 evento_timer = pygame.USEREVENT + 1
 timer_milisegundos = 1000
 pygame.time.set_timer(evento_timer, timer_milisegundos)
-
-# Función para crear superficies redondeadas
-def crear_superficie_redondeada(width, height, radius, color):
-    surface = pygame.Surface((width, height), pygame.SRCALPHA)
-    rect = pygame.Rect(0, 0, width, height)
-    pygame.draw.rect(surface, color, rect, border_radius=radius)
-    return surface
 
 # Configuración de cuadros de pregunta y respuesta
 cuadro_pregunta = {
@@ -123,34 +116,9 @@ def mostrar_juego(pantalla: pygame.Surface, cola_eventos: list[pygame.event.Even
                     bandera_respuesta = True
 
     # Dibujar elementos en la pantalla
-    pantalla.blit(imagen_fondo, (0, 0))
+    dibujar_elementos_juego(pantalla, imagen_fondo, cuadro_pregunta, lista_respuestas, pregunta_actual, datos_juego, pos_mouse)
+    
+    # Dibujar timer después de los otros elementos
     pantalla.blit(timer, (220, 20))
-    cuadro_pregunta["rectangulo"] = pantalla.blit(cuadro_pregunta["superficie"], (65, 70))
-
-    # Respuestas con hover y sombras
-    posiciones_respuestas = [(125, 183), (125, 253), (125, 323), (125, 393)]
-    for i, pos in enumerate(posiciones_respuestas):
-        # Crear sombra
-        sombra = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_SOMBRA)
-        pantalla.blit(sombra, (pos[0] + 2, pos[1] + 2))
-        
-        boton_rect = pygame.Rect(pos[0], pos[1], TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1])
-        superficie_actual = None
-        
-        if boton_rect.collidepoint(pos_mouse):
-            superficie_actual = crear_superficie_redondeada(TAMAÑO_RESPUESTA[0], TAMAÑO_RESPUESTA[1], 12, COLOR_BOTON_HOVER)
-        else:
-            superficie_actual = lista_respuestas[i]["superficie"]
-            
-        # Agregar el texto a la superficie antes de hacer hoveR
-        mostrar_texto(superficie_actual, f"{pregunta_actual[f'respuesta_{i+1}']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-        lista_respuestas[i]["rectangulo"] = pantalla.blit(superficie_actual, pos)
-
-    # Mostrar texto de pregunta
-    mostrar_texto(cuadro_pregunta["superficie"], f"{pregunta_actual['pregunta']}", (20, 20), FUENTE_22, COLOR_BLANCO)
-
-    # Mostrar puntuación y vidas
-    mostrar_texto(pantalla, f"PUNTUACION: {datos_juego['puntuacion']}", (350, 10), FUENTE_18, COLOR_NEGRO)
-    mostrar_texto(pantalla, f"VIDAS: {datos_juego['cantidad_vidas']}", (350, 40), FUENTE_18, COLOR_NEGRO)
 
     return retorno
