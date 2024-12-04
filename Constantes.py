@@ -42,6 +42,7 @@ TAMAÑO_CUADRO_RANKING = (182,40)
 
 FUENTE_18 = pygame.font.SysFont("Arial",18)
 FUENTE_20 = pygame.font.SysFont("Arial",20)
+FUENTE_21 = pygame.font.SysFont("Arial",21)
 FUENTE_22 = pygame.font.SysFont("Arial",22)
 FUENTE_25 = pygame.font.SysFont("Arial",25)
 FUENTE_27 = pygame.font.SysFont("Arial",27)

@@ -65,11 +65,11 @@ def mostrar_rankings(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Even
     pantalla.blit(imagen_fondo, (0, 0))    
     
     ranking_jugadores = leer_json()
-    FUENTE_22.render("Ranking", True, COLOR_BLANCO)
+    FUENTE_20.render("Ranking", True, COLOR_BLANCO)
     
     for i, jugador in enumerate(ranking_jugadores):
         texto = f"{i+1}.{jugador['nombre']} - {jugador['puntuacion']} puntos"        
-        texto_renderizado = FUENTE_22.render(texto, True, COLOR_NEGRO)
+        texto_renderizado = FUENTE_20.render(texto, True, COLOR_NEGRO)
         
         if i <= 4:
             pantalla.blit(texto_renderizado,(50,130+i*51))

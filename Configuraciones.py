@@ -57,7 +57,7 @@ def mostrar_ajustes(pantalla:pygame.Surface,cola_eventos:list[pygame.event.Event
     pantalla.blit(imagen_fondo, (0, 0))
     
     
-    mostrar_texto(pantalla,f"{datos_juego["volumen_musica"]} %",(140,142),FUENTE_27,COLOR_NEGRO) #volumen musica
+    mostrar_texto(pantalla,f"{datos_juego["volumen_musica"]} %",(150,145),FUENTE_22,COLOR_NEGRO) #volumen musica
 
     
     return retorno
